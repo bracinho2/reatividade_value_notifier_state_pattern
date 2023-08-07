@@ -35,17 +35,17 @@ class _MyPageState extends State<MyPage> {
       body: ValueListenableBuilder<MyPageStatePattern>(
         valueListenable: _controller,
         builder: (context, state, widget) {
-          if (state is LoadingPageState) {
-            return const Center(
-              child: CircularProgressIndicator(
-                color: Colors.amber,
-              ),
-            );
-          }
+          switch (state) {
+            case LoadingPageState _:
+              return const Center(
+                child: CircularProgressIndicator(
+                  color: Colors.amber,
+                ),
+              );
 
-          if (state is SuccessPageState) {
-            final names = state.names;
-            return ListView.builder(
+            case SuccessPageState state:
+              final names = state.names;
+              return ListView.builder(
                 itemCount: names.length,
                 itemBuilder: (context, index) {
                   final name = names[index];
@@ -53,16 +53,14 @@ class _MyPageState extends State<MyPage> {
                   return ListTile(
                     title: Text(name),
                   );
-                });
-          }
+                },
+              );
 
-          if (state is ErrorPageState) {
-            return Center(
-              child: Text(state.message),
-            );
+            case ErrorPageState state:
+              return Center(
+                child: Text(state.message),
+              );
           }
-
-          return Container();
         },
       ),
     );

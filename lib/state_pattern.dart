@@ -1,4 +1,4 @@
-abstract class MyPageStatePattern {}
+sealed class MyPageStatePattern {}
 
 class LoadingPageState extends MyPageStatePattern {}
 
